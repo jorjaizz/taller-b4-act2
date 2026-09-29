@@ -1,0 +1,88 @@
+<section class="tienda">
+  <header class="portada">
+    <p class="etiqueta">TechStore</p>
+    <h1>Una tienda pensada para la experiencia digital</h1>
+    <p class="descripcion">
+      Somos una tienda en línea especializada en tecnología, hogar y en no evitar el Tercer Impacto.
+      Tomamos mucha inspiración del anime Evangelion, así que nuestro siguiente producto
+      probablemente tenga que ver con vender Campos AT (Absolute Terror Fields). Mientras tanto,
+      disfruta la tienda.
+    </p>
+    <div class="marcas">
+      <span class="marca-valor" *ngFor="let valor of valores">{{ valor }}</span>
+    </div>
+  </header>
+
+  <div class="metricas">
+    <div class="metrica">
+      <strong>{{ numero(productos().length) }}</strong>
+      <span>Productos registrados</span>
+    </div>
+    <div class="metrica">
+      <strong>{{ numero(unidadesTotales()) }}</strong>
+      <span>Unidades en stock</span>
+    </div>
+    <div class="metrica">
+      <strong>{{ numero(categoriasUsadas()) }}</strong>
+      <span>Categorías activas</span>
+    </div>
+    <div class="metrica">
+      <strong>{{ formatoMoneda(valorInventario()) }}</strong>
+      <span>Valor del inventario</span>
+    </div>
+  </div>
+
+  <section class="bloque vision">
+    <div class="bloque-texto">
+      <p class="etiqueta">Nuestra visión</p>
+      <h2>Ser la referencia del comercio digital cercano</h2>
+      <p>
+        Queremos democratizar el acceso a productos de calidad en todo Tokyo-3. Para lograrlo,
+        acabamos con la dictadura del joven Kaji y su venta de sandías, y, si alguien se atreve a
+        atentar contra el bienestar de la tienda, les comentamos que la lanza de Longinus no la
+        tenemos de adorno.
+      </p>
+    </div>
+    <ul class="caracteristicas">
+      <li *ngFor="let caracteristica of caracteristicas">{{ caracteristica }}</li>
+    </ul>
+  </section>
+
+  <section class="bloque catalogo">
+    <div class="catalogo-encabezado">
+      <div>
+        <p class="etiqueta">Catálogo</p>
+        <h2>Productos registrados en la tienda</h2>
+      </div>
+      <p class="catalogo-conteo">
+        {{ productos().length }}
+        {{ productos().length === 1 ? 'producto' : 'productos' }}
+      </p>
+    </div>
+
+    <div class="vacio" *ngIf="productos().length === 0">
+      <h3>Aún no hay productos registrados</h3>
+      <p>
+        Dirígete a la pestaña <strong>Registro</strong> y envía el formulario para ver el producto
+        aparecer en esta lista.
+      </p>
+    </div>
+
+    <ul class="rejilla" *ngIf="productos().length > 0">
+      <li class="tarjeta" *ngFor="let producto of productos()">
+        <div class="tarjeta-encabezado">
+          <span class="categoria">{{ producto.categoria }}</span>
+          <span class="id">#{{ producto.id }}</span>
+        </div>
+        <h3>{{ producto.nombre }}</h3>
+        <p class="descripcion-producto">{{ producto.descripcion }}</p>
+        <div class="tarjeta-pie">
+          <strong class="precio">{{ formatoMoneda(producto.precio) }}</strong>
+          <span class="stock" [ngClass]="{ 'stock-bajo': producto.stock < 5 }">
+            {{ producto.stock }} en stock
+          </span>
+        </div>
+      </li>
+    </ul>
+  </section>
+</section>

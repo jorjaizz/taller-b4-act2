@@ -1,0 +1,205 @@
+:root {
+  --celeste: #a8f0d8;
+  --celeste-claro: #d9fff2;
+  --celeste-medio: #4fbf9b;
+  --celeste-tenue: #2f7f68;
+  --celeste-linea: rgb(168 240 216 / 0.22);
+
+  --impacto: #ff3b30;
+  --impacto-oscuro: #c41c14;
+  --impacto-tenue: rgb(255 59 48 / 0.12);
+  --impacto-linea: rgb(255 59 48 / 0.45);
+
+  --fondo: #050d0b;
+  --fondo-2: #081613;
+  --fondo-3: #0b201b;
+  --superficie: rgb(168 240 216 / 0.045);
+  --superficie-alta: rgb(168 240 216 / 0.08);
+  --borde: var(--celeste-linea);
+  --borde-fuerte: rgb(168 240 216 / 0.45);
+
+  --texto: var(--celeste-claro);
+  --texto-medio: rgb(217 255 242 / 0.75);
+  --texto-tenue: rgb(217 255 242 / 0.45);
+
+  --radio: 4px;
+  --radio-md: 6px;
+  --sombra: 0 0 0 1px rgb(168 240 216 / 0.08), 0 12px 32px rgb(0 0 0 / 0.5);
+  --sombra-halo: 0 0 18px rgb(168 240 216 / 0.18);
+  --sombra-impacto: 0 0 18px rgb(255 59 48 / 0.35);
+  --ancho-maximo: 1120px;
+  --fuente: 'Cascadia Mono', 'Consolas', ui-monospace, 'Courier New', monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--fuente);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--texto);
+  background-color: var(--fondo);
+  /* rejilla técnica de fondo, al estilo de los terminales de la ciudad */
+  background-image:
+    linear-gradient(rgb(168 240 216 / 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(168 240 216 / 0.045) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+p {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: var(--celeste);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+code {
+  color: var(--celeste-medio);
+  background-color: var(--superficie-alta);
+  border: 1px solid var(--borde);
+  border-radius: 3px;
+  padding: 0.05rem 0.3rem;
+  font-size: 0.85em;
+}
+
+::selection {
+  background-color: var(--celeste-medio);
+  color: var(--fondo);
+}
+
+.etiqueta {
+  display: inline-block;
+  margin-bottom: 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--celeste);
+  background-color: var(--impacto-tenue);
+  border: 1px solid var(--impacto-linea);
+  border-radius: 2px;
+  padding: 0.2rem 0.55rem;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: var(--texto);
+  background-color: rgb(0 0 0 / 0.35);
+  border: 1px solid var(--borde-fuerte);
+  border-radius: var(--radio);
+  padding: 0.7rem 0.85rem;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+}
+
+textarea {
+  resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--texto-tenue);
+}
+
+select option {
+  background-color: var(--fondo-2);
+  color: var(--texto);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--celeste);
+  background-color: rgb(0 0 0 / 0.5);
+  box-shadow:
+    0 0 0 1px var(--celeste),
+    0 0 18px rgb(168 240 216 / 0.25);
+}
+
+.boton {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-radius: var(--radio);
+  padding: 0.75rem 1.5rem;
+  border: 1px solid transparent;
+  transition:
+    background-color 0.15s ease,
+    box-shadow 0.15s ease,
+    color 0.15s ease;
+}
+
+.boton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.alerta {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  border-radius: var(--radio);
+  padding: 0.85rem 1rem;
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid transparent;
+}
+
+.alerta-icono {
+  display: grid;
+  place-items: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--fondo);
+}
+
+.alerta strong {
+  display: block;
+  letter-spacing: 0.03em;
+}

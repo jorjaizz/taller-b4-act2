@@ -1,0 +1,196 @@
+<section class="formulario-contenedor">
+  <header class="encabezado">
+    <p class="etiqueta">Actividad 2 · Formulario Reactivo</p>
+    <h1>Registro de Productos</h1>
+    <p class="subtitulo">Completa los datos del producto.</p>
+  </header>
+
+  <div class="alerta alerta-exito" *ngIf="mensajeExito()">
+    <span class="alerta-icono" aria-hidden="true">✓</span>
+    <div>
+      <strong>{{ mensajeExito() }}</strong>
+      <p class="alerta-detalle" *ngIf="productoRegistrado() as registrado">
+        {{ registrado.categoria }} · {{ formatoMoneda(registrado.precio) }} ·
+        {{ registrado.stock }} unidades
+      </p>
+    </div>
+    <button
+      type="button"
+      class="alerta-cerrar"
+      aria-label="Cerrar mensaje"
+      (click)="limpiarFormulario()"
+    >
+      ×
+    </button>
+  </div>
+
+  <form class="formulario" [formGroup]="formulario" (ngSubmit)="guardarProducto()" novalidate>
+    <div class="panel-estado">
+      <span
+        class="estado-chip"
+        *ngIf="formulario.valid"
+        [ngClass]="{ 'chip-ok': formulario.valid }"
+      >
+        Formulario válido
+      </span>
+      <span
+        class="estado-chip"
+        *ngIf="formulario.invalid"
+        [ngClass]="{ 'chip-error': formulario.invalid }"
+      >
+        Formulario inválido
+      </span>
+      <span class="estado-dato" *ngIf="contarTocados() > 0">
+        tocados: {{ contarTocados() }}/{{ totalCampos }}
+      </span>
+      <span class="estado-dato" *ngIf="contarModificados() > 0">
+        modificados: {{ contarModificados() }}
+      </span>
+      <span class="estado-dato" *ngIf="contarErrores() > 0">con error: {{ contarErrores() }}</span>
+    </div>
+
+    <div class="campo">
+      <label for="nombre">Nombre del producto <span class="obligatorio">*</span></label>
+      <input
+        id="nombre"
+        type="text"
+        formControlName="nombre"
+        placeholder="Ej. Audífonos Bluetooth"
+        autocomplete="off"
+        [ngClass]="{
+          'campo-invalido': esInvalido('nombre'),
+          'campo-valido': formulario.controls.nombre.valid && formulario.controls.nombre.touched,
+        }"
+      />
+
+      <ul class="errores" *ngIf="erroresDe('nombre').length > 0">
+        <li *ngFor="let error of erroresDe('nombre')">{{ error }}</li>
+      </ul>
+
+      <p
+        class="ayuda"
+        *ngIf="formulario.controls.nombre.touched && formulario.controls.nombre.valid"
+      >
+        ✓ {{ longitud('nombre') }} caracteres: nombre válido.
+      </p>
+    </div>
+
+    <div class="campo">
+      <label for="descripcion">Descripción <span class="obligatorio">*</span></label>
+      <textarea
+        id="descripcion"
+        rows="4"
+        formControlName="descripcion"
+        placeholder="Describe el producto con al menos 10 caracteres"
+        [ngClass]="{
+          'campo-invalido': esInvalido('descripcion'),
+          'campo-valido':
+            formulario.controls.descripcion.valid && formulario.controls.descripcion.touched,
+        }"
+      ></textarea>
+      <div class="barra-descripcion">
+        <span class="contador" [ngClass]="{ 'contador-ok': longitud('descripcion') >= 10 }">
+          {{ longitud('descripcion') }} / 10 caracteres mínimos
+        </span>
+      </div>
+
+      <ul class="errores" *ngIf="erroresDe('descripcion').length > 0">
+        <li *ngFor="let error of erroresDe('descripcion')">{{ error }}</li>
+      </ul>
+    </div>
+
+    <div class="fila">
+      <div class="campo">
+        <label for="precio">Precio <span class="obligatorio">*</span></label>
+        <div class="campo-con-prefijo">
+          <span class="prefijo">$</span>
+          <input
+            id="precio"
+            type="number"
+            step="0.01"
+            min="0"
+            formControlName="precio"
+            placeholder="0.00"
+            [ngClass]="{
+              'campo-invalido': esInvalido('precio'),
+              'campo-valido':
+                formulario.controls.precio.valid && formulario.controls.precio.touched,
+            }"
+          />
+        </div>
+
+        <ul class="errores" *ngIf="erroresDe('precio').length > 0">
+          <li *ngFor="let error of erroresDe('precio')">{{ error }}</li>
+        </ul>
+      </div>
+
+      <div class="campo">
+        <label for="stock">Stock <span class="obligatorio">*</span></label>
+        <input
+          id="stock"
+          type="number"
+          step="1"
+          min="0"
+          formControlName="stock"
+          placeholder="0"
+          [ngClass]="{
+            'campo-invalido': esInvalido('stock'),
+            'campo-valido': formulario.controls.stock.valid && formulario.controls.stock.touched,
+          }"
+        />
+
+        <ul class="errores" *ngIf="erroresDe('stock').length > 0">
+          <li *ngFor="let error of erroresDe('stock')">{{ error }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="campo">
+      <label for="categoria">Categoría <span class="obligatorio">*</span></label>
+      <select
+        id="categoria"
+        formControlName="categoria"
+        [ngClass]="{
+          'campo-invalido': esInvalido('categoria'),
+          'campo-valido':
+            formulario.controls.categoria.valid && formulario.controls.categoria.touched,
+        }"
+      >
+        <option value="" disabled>Selecciona una categoría</option>
+
+        <option *ngFor="let categoria of categorias" [value]="categoria">
+          {{ categoria }}
+        </option>
+      </select>
+
+      <ul class="errores" *ngIf="erroresDe('categoria').length > 0">
+        <li *ngFor="let error of erroresDe('categoria')">{{ error }}</li>
+      </ul>
+    </div>
+
+    <div class="alerta alerta-error-general" *ngIf="contarErrores() > 0">
+      <span class="alerta-icono" aria-hidden="true">!</span>
+      <span>
+        Hay <strong>{{ contarErrores() }}</strong> campo(s) con errores. Revisa la información
+        marcada en rojo antes de enviar.
+      </span>
+    </div>
+
+    <div class="acciones">
+      <button type="submit" class="boton boton-primario" [disabled]="enviando()">
+        <span *ngIf="!enviando()">Registrar producto</span>
+        <span *ngIf="enviando()">Registrando…</span>
+      </button>
+      <button
+        type="button"
+        class="boton boton-secundario"
+        (click)="limpiarFormulario()"
+        [disabled]="enviando()"
+      >
+        Limpiar formulario
+      </button>
+    </div>
+
+    <p class="nota">Los campos marcados con * son obligatorios.</p>
+  </form>
+</section>

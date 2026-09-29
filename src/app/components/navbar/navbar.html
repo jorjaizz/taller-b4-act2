@@ -1,0 +1,35 @@
+<header class="navbar">
+  <div class="navbar-contenedor">
+    <a class="marca" routerLink="/registro" (click)="cerrarMenu()">
+      <span class="marca-icono" aria-hidden="true">SR</span>
+      <span class="marca-texto">
+        <strong>Registro de Productos</strong>
+        <small>Actividad 2 · Angular</small>
+      </span>
+    </a>
+
+    <button
+      type="button"
+      class="boton-menu"
+      aria-label="Mostrar u ocultar el menú"
+      [attr.aria-expanded]="menuAbierto()"
+      (click)="alternarMenu()"
+    >
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="enlaces" [class.enlaces-abiertos]="menuAbierto()" aria-label="Menú principal">
+      <a
+        *ngFor="let enlace of enlaces"
+        class="enlace"
+        [routerLink]="enlace.path"
+        routerLinkActive="enlace-activo"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="cerrarMenu()"
+      >
+        {{ enlace.texto }}
+        <small>{{ enlace.descripcion }}</small>
+      </a>
+    </nav>
+  </div>
+</header>

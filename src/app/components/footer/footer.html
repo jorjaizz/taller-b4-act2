@@ -1,0 +1,40 @@
+<footer class="footer">
+  <div class="footer-contenedor">
+    <div class="bloque bloque-marca">
+      <div class="marca">
+        <span class="marca-logo" aria-hidden="true">NERV</span>
+        <span class="marca-datos">
+          <strong>{{ proyecto }}</strong>
+          <small>Proyecto académico · Angular + Formularios Reactivos</small>
+        </span>
+      </div>
+      <p class="marca-nota">Interfaz de registro de productos construida con Angular.</p>
+    </div>
+
+    <nav class="bloque bloque-enlaces" aria-label="Enlaces del pie de página">
+      <h2 class="bloque-titulo">Navegación</h2>
+      <ul>
+        <li>
+          <a routerLink="/registro">Registro de productos</a>
+        </li>
+        <li>
+          <a routerLink="/tienda">Información de la tienda</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="bloque bloque-creditos">
+      <h2 class="bloque-titulo">Créditos</h2>
+      <p class="credito-autor">{{ autor }}</p>
+      <ul class="lista-creditos">
+        <li><span>Programa</span> {{ programa }}</li>
+        <li><span>Actividad</span> 2 · Formularios Reactivos</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="barra-legal">
+    <p>© {{ anioActual }} {{ autor }} · {{ programa }} · {{ proyecto }}</p>
+    <p class="barra-estado"><span class="punto" aria-hidden="true"></span> SISTEMA ACTIVO</p>
+  </div>
+</footer>
